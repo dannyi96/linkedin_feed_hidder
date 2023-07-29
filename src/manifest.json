@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "LinkedIn Button Remover",
+    "version": "1.0",
+    "description": "Hide the Social Media Aspects of Linkedin. Focus on jobs & connections.",
+    "permissions": [
+      "scripting",
+      "activeTab"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["https://www.linkedin.com/*"],
+        "js": ["content.js"]
+      }
+    ]
+} 
