@@ -3,7 +3,6 @@ const DEFAULT_URL_TO_CLICK = "https://www.linkedin.com/jobs/";
 
 function removeAnchorWithUrlReference(url) {
   const hyperlinks = document.querySelectorAll("a");
-  var anchor_present = false;
 
   hyperlinks.forEach((hyperlink) => {
     // Check if the anchor's URL reference matches the target URL reference
