@@ -1,4 +1,4 @@
-const URLS_TO_REMOVE = "https://www.linkedin.com/feed";
+const URL_TO_REMOVE = "https://www.linkedin.com/feed";
 const DEFAULT_URL_TO_CLICK = "https://www.linkedin.com/jobs/";
 
 function removeAnchorWithUrlReference(url) {
@@ -10,11 +10,8 @@ function removeAnchorWithUrlReference(url) {
     if (hyperlink.href && hyperlink.href.startsWith(url)) {
       // Remove the anchor from the DOM
       hyperlink.remove();
-      anchor_present = true;
     }
   });
-
-  return anchor_present;
 }
 
 function clickAnchorWithUrlReference(url) {
@@ -31,11 +28,11 @@ function clickAnchorWithUrlReference(url) {
 document.onreadystatechange = function () {
     if (document.readyState == "complete") {
         /* 
-          Remove all Social Feed URLs & redirect to jobs page
-          only if Social Feed URLs are present on current page
+          Remove all anchors with Feed URL
+          & redirect to jobs page if present on feed page
         */
-        const anchor_found = removeAnchorWithUrlReference(URLS_TO_REMOVE);
-        if(anchor_found) {
+        removeAnchorWithUrlReference(URL_TO_REMOVE);
+        if(document.URL.startsWith(URL_TO_REMOVE)) {
           clickAnchorWithUrlReference(DEFAULT_URL_TO_CLICK);
         }
     }
