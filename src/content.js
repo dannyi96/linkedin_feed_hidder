@@ -1,7 +1,7 @@
 const URL_TO_REMOVE = "https://www.linkedin.com/feed";
 const DEFAULT_URL_TO_CLICK = "https://www.linkedin.com/jobs/";
 
-function disableAnchorWithUrlReference(url, disable=true) {
+function disableAnchorWithUrlReference(url, disable, redirect_url) {
   const hyperlinks = document.querySelectorAll("a");
   hyperlinks.forEach((hyperlink) => {
     // Check if the anchor's URL reference matches the target URL reference
@@ -15,6 +15,14 @@ function disableAnchorWithUrlReference(url, disable=true) {
       }
     }
   });
+
+  /*
+    Redirect to provided redirect_url if current page starts
+    with url to be removed
+  */
+  if(disable && document.URL.startsWith(url)) {
+    clickAnchorWithUrlReference(redirect_url);
+  }
 }
 
 function clickAnchorWithUrlReference(url) {
@@ -34,17 +42,14 @@ document.onreadystatechange = function () {
           Remove all anchors with Feed URL
           & redirect to jobs page if present on feed page
         */
-        disableAnchorWithUrlReference(URL_TO_REMOVE);
-        if(document.URL.startsWith(URL_TO_REMOVE)) {
-          clickAnchorWithUrlReference(DEFAULT_URL_TO_CLICK);
-        }
+        disableAnchorWithUrlReference(URL_TO_REMOVE, true, DEFAULT_URL_TO_CLICK);
     }
 }
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.enabled === false) {
-    disableAnchorWithUrlReference(URL_TO_REMOVE, false);
+    disableAnchorWithUrlReference(URL_TO_REMOVE, false, null);
   } else {
-    disableAnchorWithUrlReference(URL_TO_REMOVE);
+    disableAnchorWithUrlReference(URL_TO_REMOVE, true, DEFAULT_URL_TO_CLICK);
   }
 });

@@ -14,7 +14,7 @@
       "storage"
     ],
     "action": {
-      "default_popup": "popup.html"
+      "default_popup": "ui/popup.html"
     },
     "content_scripts": [
       {
